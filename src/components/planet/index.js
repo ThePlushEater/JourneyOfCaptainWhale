@@ -40,7 +40,6 @@ export default class Planet extends React.Component {
           />
         </mesh>
       </group>
-
     );
   }
 }

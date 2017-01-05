@@ -10,6 +10,7 @@ export default class MouseInput extends Module {
     this._maxAxisSampling = 3;
     this._curAxisSampling = 0;
     this._leftMouseDown =  false;
+    this._active = true;
   }
   isReady() {
     return this._isReady;
@@ -57,6 +58,9 @@ export default class MouseInput extends Module {
     container.addEventListener('touchend', this._onTouchUp, true);
   }
   getAxis(type) {
+    if (this._active == false) {
+      return null;
+    }
     switch(type) {
       case "Mouse X": {
         return this._curMouse.x - this._prevMouse.x;
@@ -68,6 +72,9 @@ export default class MouseInput extends Module {
     return null;
   }
   getMouseButton(index) {
+    if (this._active == false) {
+      return null;
+    }
     switch(index) {
       case 0: {
         return this._leftMouseDown;

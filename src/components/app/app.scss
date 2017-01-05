@@ -11,6 +11,7 @@
 
 
   > .loader {
+    pointer-events: none;
     -webkit-user-select: none;  /* Chrome all / Safari all */
        -moz-user-select: none;  /* Firefox all */
         -ms-user-select: none;  /* IE 10+ */
@@ -51,5 +52,20 @@
     > .loader {
       opacity: 1;
     }
+  }
+
+  > .title {
+    -webkit-user-select: none;  /* Chrome all / Safari all */
+       -moz-user-select: none;  /* Firefox all */
+        -ms-user-select: none;  /* IE 10+ */
+            user-select: none;  /* Likely future */
+
+    position: absolute;
+    top: 10%;
+    left: 5%;
+    color: #ffffff;
+    font-size: $font-xx-large;
+    font-weight: 700;
+    cursor: pointer;
   }
 }

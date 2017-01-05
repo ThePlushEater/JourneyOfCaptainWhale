@@ -23,10 +23,13 @@ if (dargv.length > 0) {
 var devDefinePlugin = new webpack.DefinePlugin({
   __DEV__: true,
   __DIRECTORY__: JSON.stringify(directory),
+  'process.env':{
+    'NODE_ENV': JSON.stringify('production')
+  }
 });
 
 var vendorList = [
-  'three'
+  "three"
 ];
 
 var corePluginList = [

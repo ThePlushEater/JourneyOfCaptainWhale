@@ -10,6 +10,8 @@ import Ship from './../ship';
 import Camera from './../camera';
 import Pins from './../pins';
 import Nodes from './../nodes';
+import Signs from './../signs';
+import Whales from './../whales';
 
 import MouseInput from './../../inputs/mouse';
 import EventControl from './../../controls/event';
@@ -32,12 +34,18 @@ export default class App extends React.Component {
 
     };
 
-    this._stats = new Stats();
-    this._stats.setMode(0); // 0: fps, 1: ms, 2: mb, 3+: custom
-    document.body.appendChild(this._stats.domElement);
+    if (process.env.NODE_ENV !== "production") {
+      this._stats = new Stats();
+      this._stats.setMode(0); // 0: fps, 1: ms, 2: mb, 3+: custom
+      document.body.appendChild(this._stats.domElement);
+    }
+
 
     this._onAnimate = () => {
-      this._stats.begin();
+      if (process.env.NODE_ENV !== "production") {
+        this._stats.begin();
+      }
+
 
       const {resource} = this.props;
       const {mouseInput, camera} = this.refs;
@@ -57,7 +65,9 @@ export default class App extends React.Component {
       });
       this.props.dispatch({type: "SET_DELTA_TIME", payload: this.time.getDelta()});
 
-      this._stats.end();
+      if (process.env.NODE_ENV !== "production") {
+        this._stats.end();
+      }
     };
   }
   componentWillMount() {
@@ -90,7 +100,7 @@ export default class App extends React.Component {
         />,
         planetSeaMaterial: <meshLambertMaterial
           resourceId="planetSeaMaterial"
-          color={0x5A98C0}
+          color={0x33587C}
         />
       });
     }.bind(this));
@@ -105,7 +115,7 @@ export default class App extends React.Component {
         />,
         planetLandMaterial: <meshLambertMaterial
           resourceId="planetLandMaterial"
-          color={0x6BDB83}
+          color={0x52A865}
         />
       });
     }.bind(this));
@@ -200,13 +210,45 @@ export default class App extends React.Component {
       });
     }.bind(this));
 
+    const signLoader = new THREE.JSONLoader(manager);
+    signLoader.load('assets/sign.json', function(geometry) {
+      this.setState({
+        signGeometry: <geometry
+          resourceId="signGeometry"
+          vertices={geometry.vertices}
+          faces={geometry.faces}
+          faceVertexUvs={geometry.faceVertexUvs}
+        />,
+        signMaterial: <meshLambertMaterial
+          resourceId="signMaterial"
+          color={0xFFFFFF}
+        >
+          <texture
+            url={'assets/sign.png'} />
+        </meshLambertMaterial>
+      });
+    }.bind(this));
 
-    const fontLoader = new THREE.FontLoader(manager);
-    fontLoader.load("assets/helvetiker_regular.typeface.json",function(font){
-      this.props.dispatch({type: "SET_3D_FONT", payload: font});
+    const whaleLoader = new THREE.JSONLoader(manager);
+    whaleLoader.load('assets/whale.json', function(geometry) {
+      this.setState({
+        whaleGeometry: <geometry
+          resourceId="whaleGeometry"
+          vertices={geometry.vertices}
+          faces={geometry.faces}
+        />,
+        whaleMaterial: <meshLambertMaterial
+          resourceId="whaleMaterial"
+          color={0xFFD25B}
+        />
+      });
     }.bind(this));
 
 
+    const fontLoader = new THREE.FontLoader(manager);
+    fontLoader.load("assets/helvetiker_bold.typeface.json",function(font){
+      this.props.dispatch({type: "SET_3D_FONT", payload: font});
+    }.bind(this));
   }
   componentWillReceiveProps(nextProps) {
 
@@ -239,6 +281,7 @@ export default class App extends React.Component {
             alpha={true}
             clearAlpha={0}
             antialias={true}
+            shadowMapType={THREE.PCFShadowMap}
             onAnimate={this._onAnimate}>
             <resources>
               {this.state.planetSeaGeometry}
@@ -257,15 +300,14 @@ export default class App extends React.Component {
               {this.state.shipDecoMaterial}
               {this.state.shipPoleGeometry}
               {this.state.shipPoleMaterial}
-              <boxGeometry
-                width={0.05}
-                height={0.05}
-                depth={0.05}
-                resourceId="nodeGeometry"
-              />
-              <meshLambertMaterial
-                resourceId="nodeMaterial"
-                color={0xFFE75D}
+              {this.state.signGeometry}
+              {this.state.signMaterial}
+              {this.state.whaleGeometry}
+              {this.state.whaleMaterial}
+              <meshPhongMaterial
+                resourceId="pinTextMaterial"
+                emissive={0xFFFFFF}
+                color={0xFFFFFF}
               />
             </resources>
             <module
@@ -274,15 +316,19 @@ export default class App extends React.Component {
             />
             <scene ref="scene">
               <Camera ref="camera" aspect={width / height} />
-              <Pins />
-              <Nodes />
               <ambientLight
                 intensity={0.25}
               />
+              <Pins />
+              <Signs />
               <Planet />
               <Ship />
+              <Whales />
             </scene>
           </React3>
+          <div className="title">
+            The Captain Whale
+          </div>
           {this.props.children}
         </div>
       );
@@ -292,3 +338,5 @@ export default class App extends React.Component {
     </div>;
   }
 }
+
+// <Nodes />
