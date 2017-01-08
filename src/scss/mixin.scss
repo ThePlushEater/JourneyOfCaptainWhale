@@ -1,8 +1,18 @@
 $portrait-max-width: 768px;
+$landscape-max-width: 1280px;
+$wide-max-width: 1920px;
 
 @mixin respond-to($media) {
   @if $media == portrait {
-    @media only screen and (max-device-aspect-ratio: 1/1) { @content; }
+    // @media only screen and (max-device-aspect-ratio: 1/1) { @content; }
     @media only screen and (max-width: $portrait-max-width) { @content; }
+  }
+  @else if $media == landscape {
+    @media only screen and (min-device-aspect-ratio: 1/1) { @content; }
+    @media only screen and (min-width: $portrait-max-width -1) and (max-width: $landscape-max-width) { @content; }
+  }
+  @else if $media == wide {
+    @media only screen and (min-device-aspect-ratio: 1/1) { @content; }
+    @media only screen and (min-width: $landscape-max-width -1) and (max-width: $wide-max-width) { @content; }
   }
 }

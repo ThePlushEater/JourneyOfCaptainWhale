@@ -49,6 +49,15 @@ canvas {
   position: absolute;
   top: 0;
 }
+#fps {
+  background-color: rgba(0, 0, 0, 0) !important;
+}
+#fpsText {
+  color: #ffffff !important;
+}
+#fpsGraph {
+  display: none;
+}
 
 
 

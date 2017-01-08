@@ -2,26 +2,43 @@
 @import "./../../scss/mixin.scss";
 
 .app {
-  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#43637f+0,263848+100 */
-  background-color: #263848;
-  background: -moz-linear-gradient(45deg, #43637f 0%, #263848 100%); /* FF3.6-15 */
-  background: -webkit-linear-gradient(45deg, #43637f 0%,#263848 100%); /* Chrome10-25,Safari5.1-6 */
-  background: linear-gradient(45deg, #43637f 0%,#263848 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#43637f', endColorstr='#263848',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+  // /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#43637f+0,263848+100 */
+  // background-color: #263848;
+  // background: -moz-linear-gradient(45deg, #43637f 0%, #263848 100%); /* FF3.6-15 */
+  // background: -webkit-linear-gradient(45deg, #43637f 0%,#263848 100%); /* Chrome10-25,Safari5.1-6 */
+  // background: linear-gradient(45deg, #43637f 0%,#263848 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  // filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#43637f', endColorstr='#263848',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+  //
+  //
+  // /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#375f86+0,263848+100 */
+  // background: rgb(55,95,134); /* Old browsers */
+  // background: -moz-linear-gradient(top,  rgba(55,95,134,1) 0%, rgba(38,56,72,1) 100%); /* FF3.6-15 */
+  // background: -webkit-linear-gradient(top,  rgba(55,95,134,1) 0%,rgba(38,56,72,1) 100%); /* Chrome10-25,Safari5.1-6 */
+  // background: linear-gradient(to bottom,  rgba(55,95,134,1) 0%,rgba(38,56,72,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  // filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#375f86', endColorstr='#263848',GradientType=0 ); /* IE6-9 */
+  //
+  // /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#263848+0,375f86+100 */
+  // background: rgb(38,56,72); /* Old browsers */
+  // background: -moz-linear-gradient(top,  rgba(38,56,72,1) 0%, rgba(55,95,134,1) 100%); /* FF3.6-15 */
+  // background: -webkit-linear-gradient(top,  rgba(38,56,72,1) 0%,rgba(55,95,134,1) 100%); /* Chrome10-25,Safari5.1-6 */
+  // background: linear-gradient(to bottom,  rgba(38,56,72,1) 0%,rgba(55,95,134,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  // filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#263848', endColorstr='#375f86',GradientType=0 ); /* IE6-9 */
+  //
 
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#263848+0,375f86+100 */
+  background: rgb(38,56,72); /* Old browsers */
+  background: -moz-linear-gradient(-45deg,  rgba(38,56,72,1) 0%, rgba(55,95,134,1) 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(-45deg,  rgba(38,56,72,1) 0%,rgba(55,95,134,1) 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(135deg,  rgba(38,56,72,1) 0%,rgba(55,95,134,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#263848', endColorstr='#375f86',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 
   > .loader {
+    z-index: 9999;
     pointer-events: none;
     -webkit-user-select: none;  /* Chrome all / Safari all */
        -moz-user-select: none;  /* Firefox all */
         -ms-user-select: none;  /* IE 10+ */
             user-select: none;  /* Likely future */
-
-    display: -webkit-box;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: -webkit-flex;
-    display: flex;
 
     position: fixed;
     top: 0;
@@ -37,35 +54,170 @@
     background: linear-gradient(45deg, #43637f 0%,#263848 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#43637f', endColorstr='#263848',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 
-    -webkit-transition: opacity 1s;
-       -moz-transition: opacity 1s;
-            transition: opacity 1s;
-    -webkit-transition-delay: 1s; /* Safari */
-            transition-delay: 1s;
+    -webkit-transition: opacity 0.75s;
+       -moz-transition: opacity 0.75s;
+            transition: opacity 0.75s;
+    -webkit-transition-delay: 0.75s; /* Safari */
+            transition-delay: 0.75s;
 
     opacity: 0;
-    > div {
-      margin: auto;
+
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+
+    > .container {
+      width: 100%;
+      margin: auto 0;
+      display: -webkit-box;
+      display: -moz-box;
+      display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+
+      -webkit-flex-direction: column;
+              flex-direction: column;
+      > .image {
+        margin: auto;
+        text-align: center;
+        width: 128px;
+        height: 128px;
+
+        transform-origin: 50% 50%;
+        transform: rotate(0deg);
+        animation-name: spin;
+        animation-duration: 10s;
+        animation-iteration-count: infinite;
+        animation-direction: normal;
+      }
+      > .text {
+        text-align: center;
+        color: $font-color-aliceblue;
+        font-size: $font-medium-small;
+        margin: 40px auto 0 auto;
+        white-space: nowrap;
+        overflow: hidden;
+
+        padding-left: 100%;
+
+        -webkit-transition-delay: 0.75s; /* Safari */
+                transition-delay: 0.75s;
+        -webkit-transition: padding-left 0.5s;
+           -moz-transition: padding-left 0.5s;
+                transition: padding-left 0.5s;
+      }
     }
   }
   &.loading {
     > .loader {
       opacity: 1;
+      > .container {
+        > .text {
+          padding-left: 0;
+        }
+      }
     }
   }
-
-  > .title {
+  > .ui-container {
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 55%;
+    height: 100%;
+    padding: 4% 6% 6% 4%;
+    color: #ffffff;
+    font-size: $font-large;
     -webkit-user-select: none;  /* Chrome all / Safari all */
        -moz-user-select: none;  /* Firefox all */
         -ms-user-select: none;  /* IE 10+ */
             user-select: none;  /* Likely future */
 
-    position: absolute;
-    top: 10%;
-    left: 5%;
-    color: #ffffff;
-    font-size: $font-xx-large;
-    font-weight: 700;
-    cursor: pointer;
+    @include respond-to(wide) {
+
+    }
+    @include respond-to(landscape) {
+
+    }
+    @include respond-to(portrait) {
+      width: 100%;
+      height: 65%;
+      padding: 6% 4%;
+    }
+
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+
+    -webkit-flex-direction: column;
+            flex-direction: column;
+
+    > .title {
+      pointer-events: none;
+      -webkit-user-select: none;  /* Chrome all / Safari all */
+         -moz-user-select: none;  /* Firefox all */
+          -ms-user-select: none;  /* IE 10+ */
+              user-select: none;  /* Likely future */
+      position: relative;
+      -webkit-flex-shrink: 0;
+              flex-shrink: 0;
+      text-align: center;
+      font-weight: 700;
+      > .the {
+        width: 90%;
+        position: absolute;
+        top: -35%;
+        left: 0;
+        text-align: center;
+        @include respond-to(wide) {
+          > div {
+            font-size: 2vw !important;
+          }
+        }
+        @include respond-to(landscape) {
+          > div {
+            font-size: 2vw !important;
+          }
+        }
+        @include respond-to(portrait) {
+          > div {
+            top: -37%;
+            font-size: 6vw !important;
+          }
+        }
+        > div > span {
+          font-size: 80%;
+          @include respond-to(portrait) {
+            font-size: 65%;
+            font-size: 75%;
+          }
+          -webkit-transform: rotate(-17deg); /* Chrome, Safari, Opera */
+              -ms-transform: rotate(-17deg); /* IE 9 */
+                  transform: rotate(-17deg);
+        }
+      }
+    }
+    > .content {
+      overflow-y: hidden;
+      -webkit-flex-grow: 1;
+                flex-grow: 1;
+      margin: 4% 1% 0 1%;
+      font-weight: 400;
+      @include respond-to(wide) {
+        font-size: $font-medium-large;
+      }
+      @include respond-to(landscape) {
+        font-size: $font-medium;
+      }
+      @include respond-to(portrait) {
+        font-size: $font-medium-small;
+        margin: 8% 0 0 0;
+      }
+
+    }
   }
 }

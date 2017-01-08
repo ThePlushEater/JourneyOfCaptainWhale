@@ -4,9 +4,12 @@ import store from "./../../store";
 // import { connect } from "react-redux";
 // import React3 from 'react-three-renderer';
 import * as THREE from 'three';
+// import {MeshLine} from 'three.meshline';
+// var MeshLine = require( 'three.meshline' );
 
 import {geoCoordinateToEuler, geoEulerToCoordinate} from './../../utils/math';
 import {getPath} from './../../utils/pathfinder';
+
 
 
 export default class Ship extends React.Component {
@@ -17,23 +20,30 @@ export default class Ship extends React.Component {
       position: new THREE.Vector3(0, 0, 2.01),
       scale: new THREE.Vector3(1.5, 1.5, 1.5),
       targetRotations: [],
+      lineVertices: [],
+      // lineGeometry: null,
+      // lineMesh: null,
     }
+    this.lineDrawingCurFrame = 0;
+    this.lineDrawingMaxFrame = 0.1;
+    this.pathLength = 50;
   }
   componentWillMount() {
-
+    const vector = new THREE.Vector3(0, 0, 0);
+    let list = [];
+    for(let i=0; i<this.pathLength; i++) {
+      list.push(vector);
+    }
+    // const geo = new THREE.Geometry();
+    // const mesh = new MeshLine();
+    // mesh.setGeometry( geo );
+    this.setState({
+      lineVertices: list,
+      // lineGeometry: geo,
+      // lineMesh: mesh,
+    });
   }
   componentDidMount() {
-    const {shipRoot} = this.refs;
-    // if (store.getState().graph.vertices.length > 0) {
-    //   this.setState({
-    //     targetRotations: [],
-    //   });
-    // }
-    // if (shipRoot) {
-    //   const nextTargetRotation = new THREE.Quaternion();
-    //   nextTargetRotation.setFromEuler(geoCoordinateToEuler(store.getState().graph.vertices[0].coordinate));
-    //   shipRoot.setRotationFromQuaternion(nextTargetRotation);
-    // }
     this.prevShipWorldPosition = new THREE.Vector3(0, 0, 0);
     this.accumulatedTime = 0;
     this.prevTargetRotation = new THREE.Quaternion();
@@ -77,7 +87,10 @@ export default class Ship extends React.Component {
     const path = getPath(startVertex, endVertex, vertices, edges);
     let newTargetRotations = [];
     for (let i=0; i<path.length; i++) {
-      newTargetRotations.push(geoCoordinateToEuler(path[i]));
+      let dynamicPath = path[i];
+      dynamicPath[0] += (Math.random() - 0.5) * 2 * 0.01;
+      dynamicPath[1] += (Math.random() - 0.5) * 2 * 0.01;
+      newTargetRotations.push(geoCoordinateToEuler(dynamicPath));
     }
     this.accumulatedTime = 0;
     this.prevTargetRotation.setFromEuler(shipRoot.rotation);
@@ -87,8 +100,8 @@ export default class Ship extends React.Component {
 
   }
   componentWillReceiveProps(nextProps) {
-    const {shipRoot, ship} = this.refs;
-    const {targetRotations} = this.state;
+    const {shipRoot, ship, shipPath} = this.refs;
+    const {targetRotations, lineVertices} = this.state;
     const {deltaTime} = store.getState().time;
 
     if (this.state.eventControl == null) {
@@ -146,12 +159,27 @@ export default class Ship extends React.Component {
           targetRotations: targetRotations,
         });
       }
-      this.accumulatedTime += deltaTime * 0.15;
+      this.accumulatedTime += deltaTime * 0.175;
       this.prevShipWorldPosition = new THREE.Vector3().setFromMatrixPosition(ship.matrixWorld);
+
+      if (this.lineDrawingCurFrame > this.lineDrawingMaxFrame) {
+        lineVertices.push(this.prevShipWorldPosition.clone().multiplyScalar(1.01));
+        if (lineVertices.length > this.pathLength) {
+          lineVertices.shift();
+        }
+        this.setState({
+          lineVertices: lineVertices,
+        });
+        shipPath.verticesNeedUpdate = true;
+        shipPath.computeLineDistances();
+        this.lineDrawingCurFrame = 0;
+      } else {
+        this.lineDrawingCurFrame += deltaTime;
+      }
     }
     ship.setRotationFromEuler(new THREE.Euler(0.1 * Math.sin(this.shipSwindleTime), 0.2 * Math.sin(this.shipSwindleTime), this.shipAngle));
     this.shipSwindleTime += deltaTime;
-    if (this.shipSwindleTime > Math.PI * 2) {
+    while(this.shipSwindleTime > Math.PI * 2) {
       this.shipSwindleTime -= Math.PI * 2;
     }
   }
@@ -160,58 +188,69 @@ export default class Ship extends React.Component {
   }
   render() {
     return(
-      <group ref="shipRoot">
-        <group ref="ship"
-          scale={this.state.scale}
-          position={this.state.position}>
-          <mesh
-            rotation={this.state.rotation}>
-            <geometryResource
-              resourceId="shipBottomGeometry"
-            />
-            <materialResource
-              resourceId="shipBottomMaterial"
-            />
-          </mesh>
-          <mesh
-            rotation={this.state.rotation}>
-            <geometryResource
-              resourceId="shipBodyGeometry"
-            />
-            <materialResource
-              resourceId="shipBodyMaterial"
-            />
-          </mesh>
-          <mesh
-            rotation={this.state.rotation}>
-            <geometryResource
-              resourceId="shipTopGeometry"
-            />
-            <materialResource
-              resourceId="shipTopMaterial"
-            />
-          </mesh>
-          <mesh
-            rotation={this.state.rotation}>
-            <geometryResource
-              resourceId="shipDecoGeometry"
-            />
-            <materialResource
-              resourceId="shipDecoMaterial"
-            />
-          </mesh>
-          <mesh
-            rotation={this.state.rotation}>
-            <geometryResource
-              resourceId="shipPoleGeometry"
-            />
-            <materialResource
-              resourceId="shipPoleMaterial"
-            />
-          </mesh>
+      <group>
+        <line>
+          <geometry
+            ref="shipPath"
+            vertices={this.state.lineVertices}
+            dynamic={true}
+          />
+          <materialResource
+            resourceId="shipPathMaterial"
+          />
+        </line>
+        <group ref="shipRoot">
+          <group ref="ship"
+            scale={this.state.scale}
+            position={this.state.position}>
+            <mesh
+              rotation={this.state.rotation}>
+              <geometryResource
+                resourceId="shipBottomGeometry"
+              />
+              <materialResource
+                resourceId="shipBottomMaterial"
+              />
+            </mesh>
+            <mesh
+              rotation={this.state.rotation}>
+              <geometryResource
+                resourceId="shipBodyGeometry"
+              />
+              <materialResource
+                resourceId="shipBodyMaterial"
+              />
+            </mesh>
+            <mesh
+              rotation={this.state.rotation}>
+              <geometryResource
+                resourceId="shipTopGeometry"
+              />
+              <materialResource
+                resourceId="shipTopMaterial"
+              />
+            </mesh>
+            <mesh
+              rotation={this.state.rotation}>
+              <geometryResource
+                resourceId="shipDecoGeometry"
+              />
+              <materialResource
+                resourceId="shipDecoMaterial"
+              />
+            </mesh>
+            <mesh
+              rotation={this.state.rotation}>
+              <geometryResource
+                resourceId="shipPoleGeometry"
+              />
+              <materialResource
+                resourceId="shipPoleMaterial"
+              />
+            </mesh>
+          </group>
         </group>
       </group>
-
     );
   }
 }

@@ -24,7 +24,7 @@ var devDefinePlugin = new webpack.DefinePlugin({
   __DEV__: true,
   __DIRECTORY__: JSON.stringify(directory),
   'process.env':{
-    'NODE_ENV': JSON.stringify('production')
+    'NODE_ENV': JSON.stringify('production') // production or develop
   }
 });
 

@@ -27,15 +27,13 @@ export default class Whales extends React.Component {
     return(
       <group>
         <Whale index={19} />
-        <Whale index={5} />
-        <Whale index={8} />
-        <Whale index={15} />
-        <Whale index={23} />
+        <Whale index={3} />
         <Whale index={28} />
-        <Whale index={35} />
-        <Whale index={39} />
-        <Whale index={41} />
         <Whale index={44} />
+        <Whale index={13} />
+        <Whale index={23} />
+        <Whale index={22} />
+        <Whale index={40} />
       </group>
     );
   }

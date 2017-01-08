@@ -52,6 +52,8 @@ export default class Signs extends React.Component {
         <Sign coordinate={[49.797782, -33.727483]} />
         <Sign coordinate={[-11.996491, -133.689735]} />
         <Sign coordinate={[-39.457563, -12.015900]} />
+        <Sign coordinate={[-24.377832, -85.724450]} />
+        <Sign coordinate={[-18.823857, 87.068521]} />
       </group>
     );
   }

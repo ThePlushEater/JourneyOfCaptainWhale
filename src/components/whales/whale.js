@@ -12,7 +12,7 @@ import {getPath} from './../../utils/pathfinder';
 export default class Whale extends React.Component {
   constructor(props, context) {
     super(props, context);
-    const size = (Math.random() - 0.5) * 0.1 + 0.2;
+    const size = (Math.random() - 0.5) * 0.05 + 0.15;
     this.state = {
       rotation: new THREE.Euler(Math.PI / 2, Math.PI, 0),
       position: new THREE.Vector3(0, 0, 2),
@@ -69,7 +69,10 @@ export default class Whale extends React.Component {
     const path = getPath(startVertex, endVertex, vertices, edges);
     let newTargetRotations = [];
     for (let i=0; i<path.length; i++) {
-      newTargetRotations.push(geoCoordinateToEuler(path[i]));
+      let dynamicPath = path[i];
+      dynamicPath[0] += (Math.random() - 0.5) * 2 * 0.001;
+      dynamicPath[1] += (Math.random() - 0.5) * 2 * 0.001;
+      newTargetRotations.push(geoCoordinateToEuler(dynamicPath));
     }
     this.accumulatedTime = 0;
     this.setState({
@@ -120,7 +123,7 @@ export default class Whale extends React.Component {
       const angle = downDirection.angleTo(whaleDirection);
       if (!isNaN(angle)) {
         const sign = new THREE.Vector3().crossVectors(downDirection, whaleDirection).y < 0 ? -1 : 1;
-        this.whaleAngle = this.whaleAngle + (sign * angle - this.whaleAngle - Math.PI / 3) * deltaTime * 0.1;
+        this.whaleAngle = this.whaleAngle + (sign * angle - this.whaleAngle - Math.PI / 3) * deltaTime;
       }
 
       if (curDirection.dot(targetDirection) > 0.999) {
@@ -134,17 +137,17 @@ export default class Whale extends React.Component {
       this.accumulatedTime += deltaTime * 0.0025;
       this.prevWhaleWorldPosition = new THREE.Vector3().setFromMatrixPosition(whale.matrixWorld);
     }
-    whale.setRotationFromEuler(new THREE.Euler(0.2 * Math.sin(this.whaleSwindleTime2), 0.2 * Math.sin(this.whaleSwindleTime), this.whaleAngle + 0.1 * Math.sin(this.whaleSwindleTime)));
+    whale.setRotationFromEuler(new THREE.Euler(0.1 * Math.sin(this.whaleSwindleTime2), 0.1 * Math.sin(this.whaleSwindleTime), this.whaleAngle + 0.1 * Math.sin(this.whaleSwindleTime)));
     this.whaleSwindleTime += deltaTime;
-    if (this.whaleSwindleTime > Math.PI * 2) {
+    while (this.whaleSwindleTime > Math.PI * 2) {
       this.whaleSwindleTime -= Math.PI * 2;
     }
     this.whaleSwindleTime2 += deltaTime * 0.75;
-    if (this.whaleSwindleTime2 > Math.PI * 2) {
+    while (this.whaleSwindleTime2 > Math.PI * 2) {
       this.whaleSwindleTime2 -= Math.PI * 2;
     }
     this.setState({
-      position: new THREE.Vector3(0, 0, 1.995 + 0.005 * Math.sin(this.whaleSwindleTime)),
+      position: new THREE.Vector3(0, 0, 1.995 + 0.0025 * Math.sin(this.whaleSwindleTime)),
     });
   }
   componentWillUnmount() {

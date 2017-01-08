@@ -17,6 +17,8 @@ import MouseInput from './../../inputs/mouse';
 import EventControl from './../../controls/event';
 import Stats from 'stats-js';
 
+import { Textfit } from 'react-textfit';
+
 require('./app.scss');
 
 @connect((store) => {
@@ -46,14 +48,10 @@ export default class App extends React.Component {
         this._stats.begin();
       }
 
-
       const {resource} = this.props;
       const {mouseInput, camera} = this.refs;
       if (!mouseInput.isReady()) {
-        const {
-          scene,
-          container,
-        } = this.refs;
+        const {scene, container} = this.refs;
 
         mouseInput.ready(scene, container, camera);
         this.props.dispatch({type: "SET_MOUSE_INPUT_MANAGER", payload: mouseInput});
@@ -246,7 +244,7 @@ export default class App extends React.Component {
 
 
     const fontLoader = new THREE.FontLoader(manager);
-    fontLoader.load("assets/helvetiker_bold.typeface.json",function(font){
+    fontLoader.load("assets/droid_sans_bold.typeface.json",function(font){
       this.props.dispatch({type: "SET_3D_FONT", payload: font});
     }.bind(this));
   }
@@ -265,10 +263,14 @@ export default class App extends React.Component {
     const height = window.innerHeight; // canvas height
 
     const loader = <div className="loader">
-      <div>
-        Loading...
+      <div className="container">
+        <img className="image" src="./loading.png" />
+        <div className="text">
+          Loading the world...
+        </div>
       </div>
     </div>;
+
 
     if (resource.loaded) {
       return(
@@ -281,7 +283,7 @@ export default class App extends React.Component {
             alpha={true}
             clearAlpha={0}
             antialias={true}
-            shadowMapType={THREE.PCFShadowMap}
+            pixelRatio={window.devicePixelRatio}
             onAnimate={this._onAnimate}>
             <resources>
               {this.state.planetSeaGeometry}
@@ -309,6 +311,16 @@ export default class App extends React.Component {
                 emissive={0xFFFFFF}
                 color={0xFFFFFF}
               />
+              <meshLambertMaterial
+                resourceId="nodeMaterial"
+                color={0xFFD25B}
+              />
+              <lineDashedMaterial
+                resourceId="shipPathMaterial"
+                color={0xFFFFFF}
+                scale={1}
+                linewidth={2}
+              />
             </resources>
             <module
               ref="mouseInput"
@@ -323,11 +335,55 @@ export default class App extends React.Component {
               <Signs />
               <Planet />
               <Ship />
-              <Whales />
             </scene>
           </React3>
-          <div className="title">
-            The Captain Whale
+
+          <div className="ui-container">
+            <div className="title">
+              <div className="the">
+                <Textfit
+                  mode="single"
+                  forceSingleModeWidth={false}
+                  perfectFit={true}
+                  throttle ={100}>
+                  the
+                </Textfit>
+              </div>
+              <Textfit
+                mode="single"
+                throttle ={100}>
+                Journey of Captain Whale
+              </Textfit>
+            </div>
+            <div className="content">
+              Line 1<br/>
+              Line 2<br/>
+              Line 3<br/>
+              Line 4<br/>
+              Line 5<br/>
+              Line 6<br/>
+              Line 7<br/>
+              Line 8<br/>
+              Line 9<br/>
+              Line 1<br/>
+              Line 2<br/>
+              Line 3<br/>
+              Line 4<br/>
+              Line 5<br/>
+              Line 6<br/>
+              Line 7<br/>
+              Line 8<br/>
+              Line 9<br/>
+              Line 1<br/>
+              Line 2<br/>
+              Line 3<br/>
+              Line 4<br/>
+              Line 5<br/>
+              Line 6<br/>
+              Line 7<br/>
+              Line 8<br/>
+              Line 9<br/>
+            </div>
           </div>
           {this.props.children}
         </div>
@@ -338,5 +394,3 @@ export default class App extends React.Component {
     </div>;
   }
 }
-
-// <Nodes />

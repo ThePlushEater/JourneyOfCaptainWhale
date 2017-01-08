@@ -54,7 +54,7 @@ export default class Home extends React.Component {
     const { localization } = this.props.localization;
     return(
       <div ref="container" className="home">
-        HOME
+        
       </div>
     );
   }

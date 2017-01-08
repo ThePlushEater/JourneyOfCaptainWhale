@@ -11,7 +11,7 @@ export default class Sign extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
-      scale: new THREE.Euler(1.25, 1.25, 1.25),
+      scale: new THREE.Vector3(1.25, 1.25, 1.25),
       rotation: new THREE.Euler(1.57, (Math.random() - 0.5) * 2, Math.random() - 0.5),
       position: new THREE.Vector3(0, 0, 1.9),
     }

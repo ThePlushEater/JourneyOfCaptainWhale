@@ -34,17 +34,17 @@ export default class Camera extends React.Component {
     const width = document.querySelector('.app') ? document.querySelector('.app').clientWidth : 0;
     const height = document.querySelector('.app') ? document.querySelector('.app').clientHeight : 0;
     if (width != 0 && height != 0) {
-      if (width <= 768 && width < height) {
+      if (width <= 1024 && width < height) {
         this.setState({
-          position: new THREE.Vector3(0, 0, 3 * Math.max(768 / width, 1)),
-          rotation: new THREE.Euler(Math.PI * 0.15, 0, 0),
-          offset: [0.3, 0.4, -0.1],
+          position: new THREE.Vector3(0, 0, 0),
+          rotation: new THREE.Euler(0, 0, 0),
+          offset: [0.0, 0.0, 0],
         });
       } else {
         this.setState({
-          position: new THREE.Vector3(0, 0, 4.5),
-          rotation: new THREE.Euler(0.1, Math.PI * 0.1, 0),
-          offset: [0.3, 0.3, 0],
+          position: new THREE.Vector3(0, 0, 0),
+          rotation: new THREE.Euler(0, 0, 0),
+          offset: [0.0, 0.0, 0],
         });
       }
     }
@@ -63,6 +63,28 @@ export default class Camera extends React.Component {
     })
   }
   componentWillReceiveProps(nextProps) {
+    // const {eventControl} = store.getState().resource;
+    const width = document.querySelector('.app') ? document.querySelector('.app').clientWidth : 0;
+    const height = document.querySelector('.app') ? document.querySelector('.app').clientHeight : 0;
+    if (width != 0 && height != 0) {
+      if (width <= 768 && width < height) {
+        this.setState({
+          // position: new THREE.Vector3(0, 0, 3 * Math.max(768 / width, 1)),
+          // rotation: new THREE.Euler(Math.PI * 0.15, 0, 0),
+          // offset: [0.3, 0.4, -0.1],
+          position: new THREE.Vector3(0, 0, 6 * Math.max(768 / width, 1)),
+          rotation: new THREE.Euler(0.225, 0, 0),
+          offset: [0.3, 0.3, -0.1],
+        });
+      } else {
+        this.setState({
+          position: new THREE.Vector3(0, 0, 9.5),
+          rotation: new THREE.Euler(0.0, Math.PI * 0.05, 0),
+          offset: [0.3, 0.3, 0],
+        });
+      }
+    }
+
     if (this.state.eventControl == null) {
       const {eventControl} = store.getState().resource;
       eventControl.addEventListener('selectpin', this.onSelectPin.bind(this));
@@ -93,7 +115,7 @@ export default class Camera extends React.Component {
           rotateMomentum: rotateMomentum,
         });
       } else {
-        const rotateMomentum = this.state.rotateMomentum.clone().lerp(new THREE.Vector3(0, 0, 0), deltaTime * 5 * this.state.position.z / 4);
+        const rotateMomentum = this.state.rotateMomentum.clone().lerp(new THREE.Vector3(0, 0, 0), deltaTime * 1.5 * this.state.position.z / 4);
         if (rotateMomentum.length() != 0) {
           cameraRoot.rotateOnAxis(rotateMomentum.clone().normalize(), rotateMomentum.length() * deltaTime * 0.025 * this.state.position.z / 4);
         }
@@ -119,10 +141,10 @@ export default class Camera extends React.Component {
     } else if (targetRotation != null) {
       const currentRotation = new THREE.Quaternion();
       currentRotation.setFromEuler(cameraRoot.rotation);
-      const updatedRotation = currentRotation.slerp(targetRotation, deltaTime * 1.5);
+      const updatedRotation = currentRotation.slerp(targetRotation, deltaTime * 1.25);
       cameraRoot.setRotationFromQuaternion(updatedRotation);
     } else {
-      const rotateMomentum = this.state.rotateMomentum.clone().lerp(new THREE.Vector3(0, 0, 0), deltaTime * 5 * this.state.position.z / 4);
+      const rotateMomentum = this.state.rotateMomentum.clone().lerp(new THREE.Vector3(0, 0, 0), deltaTime * 1.5 * this.state.position.z / 4);
       if (rotateMomentum.length() != 0) {
         cameraRoot.rotateOnAxis(rotateMomentum.clone().normalize(), rotateMomentum.length() * deltaTime * 0.025 * this.state.position.z / 4);
       }
@@ -140,7 +162,7 @@ export default class Camera extends React.Component {
       <group ref="cameraRoot">
         <perspectiveCamera
           name="camera"
-          fov={60}
+          fov={30}
           aspect={aspect}
           near={0.1}
           far={1000}
