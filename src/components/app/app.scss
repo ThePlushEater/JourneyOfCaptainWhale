@@ -2,6 +2,7 @@
 @import "./../../scss/mixin.scss";
 
 .app {
+  color: $font-color-aliceblue;
   // /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#43637f+0,263848+100 */
   // background-color: #263848;
   // background: -moz-linear-gradient(45deg, #43637f 0%, #263848 100%); /* FF3.6-15 */
@@ -25,12 +26,9 @@
   // filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#263848', endColorstr='#375f86',GradientType=0 ); /* IE6-9 */
   //
 
-  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#263848+0,375f86+100 */
-  background: rgb(38,56,72); /* Old browsers */
-  background: -moz-linear-gradient(-45deg,  rgba(38,56,72,1) 0%, rgba(55,95,134,1) 100%); /* FF3.6-15 */
-  background: -webkit-linear-gradient(-45deg,  rgba(38,56,72,1) 0%,rgba(55,95,134,1) 100%); /* Chrome10-25,Safari5.1-6 */
-  background: linear-gradient(135deg,  rgba(38,56,72,1) 0%,rgba(55,95,134,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#263848', endColorstr='#375f86',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+
+  background-image: url(./texture.png);
+  background-size: cover;
 
   > .loader {
     z-index: 9999;
@@ -46,7 +44,6 @@
     width: 100%;
     height: 100%;
     color: #ffffff;
-    font-size: $font-large;
 
     background-color: #263848;
     background: -moz-linear-gradient(45deg, #43637f 0%, #263848 100%); /* FF3.6-15 */
@@ -96,7 +93,7 @@
         text-align: center;
         color: $font-color-aliceblue;
         font-size: $font-medium-small;
-        margin: 40px auto 0 auto;
+        margin: 24px auto 0 auto;
         white-space: nowrap;
         overflow: hidden;
 
@@ -125,7 +122,7 @@
     position: absolute;
     top: 0;
     left: 0;
-    width: 55%;
+    width: 52.5%;
     height: 100%;
     padding: 4% 6% 6% 4%;
     color: #ffffff;
@@ -136,15 +133,15 @@
             user-select: none;  /* Likely future */
 
     @include respond-to(wide) {
-
+      padding: 4% 6% 6% 6%;
     }
     @include respond-to(landscape) {
 
     }
     @include respond-to(portrait) {
       width: 100%;
-      height: 65%;
-      padding: 6% 4%;
+      height: 62.5%;
+      padding: 6% 5%;
     }
 
     display: -webkit-box;
@@ -168,9 +165,9 @@
       text-align: center;
       font-weight: 700;
       > .the {
-        width: 90%;
+        width: 87.5%;
         position: absolute;
-        top: -35%;
+        top: -30%;
         left: 0;
         text-align: center;
         @include respond-to(wide) {
@@ -184,8 +181,9 @@
           }
         }
         @include respond-to(portrait) {
+          width: 90%;
           > div {
-            top: -37%;
+            top: -42%;
             font-size: 6vw !important;
           }
         }
@@ -202,11 +200,23 @@
       }
     }
     > .content {
+      display: -webkit-box;
+      display: -moz-box;
+      display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+
+      -webkit-flex-direction: column;
+              flex-direction: column;
+
       overflow-y: hidden;
       -webkit-flex-grow: 1;
-                flex-grow: 1;
-      margin: 4% 1% 0 1%;
+              flex-grow: 1;
+      margin: 4% 12% 0 1%;
       font-weight: 400;
+      @include respond-to(huge) {
+        font-size: $font-large;
+      }
       @include respond-to(wide) {
         font-size: $font-medium-large;
       }
@@ -215,9 +225,20 @@
       }
       @include respond-to(portrait) {
         font-size: $font-medium-small;
-        margin: 8% 0 0 0;
+        margin: 2% 1% 0 1.5%;
       }
 
+      line-height: 1.5;
     }
   }
+}
+
+.copyright {
+  font-size: $font-small;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  padding: 4px;
+  background-color: rgba(55, 95, 133, 0.75);
+  border-top-left-radius: 2px;
 }

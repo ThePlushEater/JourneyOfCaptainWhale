@@ -74,7 +74,7 @@ export default class Camera extends React.Component {
           // offset: [0.3, 0.4, -0.1],
           position: new THREE.Vector3(0, 0, 6 * Math.max(768 / width, 1)),
           rotation: new THREE.Euler(0.225, 0, 0),
-          offset: [0.3, 0.3, -0.1],
+          offset: [0.3, 0.3, 0],
         });
       } else {
         this.setState({
@@ -128,13 +128,18 @@ export default class Camera extends React.Component {
         const camDirection = new THREE.Vector3(0, 0, 1);
         camDirection.applyEuler(cameraRoot.rotation);
         const pinDirection = new THREE.Vector3(0, 0, 1);
-        const temp = geoCoordinateToEuler(this.state.eventControl._pin.props.coordinate);
+        let temp;
+        if (this.state.eventControl._pin.props) {
+          temp = geoCoordinateToEuler(this.state.eventControl._pin.props.coordinate);
+        } else {
+          temp = geoCoordinateToEuler(this.state.eventControl._pin.coordinate);
+        }
         pinDirection.applyEuler(new THREE.Euler(temp.x + offset[0], temp.y + offset[1], temp.z + offset[2], "YXZ"));
 
         if (camDirection.dot(pinDirection) < 0.99) {
-            this.setState({
-              targetRotation: null,
-            });
+          this.setState({
+            targetRotation: null,
+          });
         }
       }
 
@@ -151,6 +156,10 @@ export default class Camera extends React.Component {
       this.setState({
         rotateMomentum: rotateMomentum,
       });
+    }
+
+    if (this.state.eventControl != null) {
+      this.state.eventControl.moveCamera();
     }
   }
   componentWillUnmount() {

@@ -16,6 +16,7 @@ ReactDom.render(<Provider store={store}>
       <Route path={__DIRECTORY__ + "/"} component={App}>
         <IndexRoute component={Home} />
       </Route>
+      <Route path={__DIRECTORY__ + "/:postTitle"} component={App}/>
     </Router>
   </Provider>
 , document.querySelector('#app'));

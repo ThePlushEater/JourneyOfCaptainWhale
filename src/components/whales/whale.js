@@ -12,7 +12,7 @@ import {getPath} from './../../utils/pathfinder';
 export default class Whale extends React.Component {
   constructor(props, context) {
     super(props, context);
-    const size = (Math.random() - 0.5) * 0.05 + 0.15;
+    const size = (Math.random() - 0.5) * 0.05 + 1;
     this.state = {
       rotation: new THREE.Euler(Math.PI / 2, Math.PI, 0),
       position: new THREE.Vector3(0, 0, 2),

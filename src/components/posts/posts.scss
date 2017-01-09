@@ -1,0 +1,53 @@
+@import "./../../scss/variables.scss";
+@import "./../../scss/mixin.scss";
+
+.posts {
+  font-weight: 400;
+  -webkit-flex-grow: 1;
+          flex-grow: 1;
+
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+
+  -webkit-flex-direction: column;
+          flex-direction: column;
+
+
+  > .title {
+    -webkit-flex-shrink: 0;
+            flex-shrink: 0;
+
+    margin-top: 16px;
+    margin-bottom: 4px;
+    // font-weight: 700;
+    font-size: 125%;
+    @include respond-to(wide) {
+
+    }
+    @include respond-to(landscape) {
+
+    }
+    @include respond-to(portrait) {
+      margin-top: 12px;
+      margin-bottom: 4px;
+    }
+  }
+  > .content {
+    margin-left: 16px;
+    -webkit-flex-grow: 1;
+            flex-grow: 1;
+    font-style: italic;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+
+    > .post-list-item {
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}

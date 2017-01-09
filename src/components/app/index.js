@@ -19,12 +19,18 @@ import Stats from 'stats-js';
 
 import { Textfit } from 'react-textfit';
 
+import {fetchPosts} from './../../actions/postActions';
+import Posts from './../posts';
+import Info from './../info';
+import Report from './../report';
+
 require('./app.scss');
 
 @connect((store) => {
   return {
     localization: store.localization,
     resource: store.resource,
+    post: store.post,
   }
 })
 export default class App extends React.Component {
@@ -51,9 +57,9 @@ export default class App extends React.Component {
       const {resource} = this.props;
       const {mouseInput, camera} = this.refs;
       if (!mouseInput.isReady()) {
-        const {scene, container} = this.refs;
+        const {scene, container, ship} = this.refs;
 
-        mouseInput.ready(scene, container, camera);
+        mouseInput.ready(scene, container, camera, ship);
         this.props.dispatch({type: "SET_MOUSE_INPUT_MANAGER", payload: mouseInput});
         this.props.dispatch({type: "SET_EVENT_CONTROL", payload: new EventControl(camera)});
       }
@@ -67,11 +73,16 @@ export default class App extends React.Component {
         this._stats.end();
       }
     };
+    this.startTime = new Date().valueOf();
   }
   componentWillMount() {
 
   }
   componentDidMount() {
+    this.props.dispatch({type: "SET_ROUTER", payload: this.props.router});
+    this.props.dispatch({type: "PUSH_ROUTE", payload: this.props.location.pathname.replace("/", "")});
+
+    this.props.dispatch(fetchPosts());
     const manager = new THREE.LoadingManager();
     this.props.dispatch({type: "SET_RESOURCE_LOAD_MANAGER", payload: manager});
 
@@ -79,7 +90,10 @@ export default class App extends React.Component {
       this.props.dispatch({type: "FETCH_RESOURCES_PENDING"});
     }.bind(this);
     manager.onLoad = function() {
-      this.props.dispatch({type: "FETCH_RESOURCES_FULFILLED"});
+      const endTime = new Date().valueOf();
+      setTimeout(function() {
+        this.props.dispatch({type: "FETCH_RESOURCES_FULFILLED"});
+      }.bind(this), Math.max(endTime - this.startTime, 2500));
     }.bind(this);
     manager.onProgress = function(url, itemsLoaded, itemsTotal) {
       // console.log( 'Loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.' );
@@ -242,6 +256,21 @@ export default class App extends React.Component {
       });
     }.bind(this));
 
+    const arrowLoader = new THREE.JSONLoader(manager);
+    arrowLoader.load('assets/arrow.json', function(geometry) {
+      this.setState({
+        arrowGeometry: <geometry
+          resourceId="arrowGeometry"
+          vertices={geometry.vertices}
+          faces={geometry.faces}
+        />,
+        arrowMaterial: <meshLambertMaterial
+          resourceId="arrowMaterial"
+          color={0xE76666}
+        />
+      });
+    }.bind(this));
+
 
     const fontLoader = new THREE.FontLoader(manager);
     fontLoader.load("assets/droid_sans_bold.typeface.json",function(font){
@@ -249,15 +278,19 @@ export default class App extends React.Component {
     }.bind(this));
   }
   componentWillReceiveProps(nextProps) {
-
+    // if (this.props.location.pathname.replace("/", "") != nextProps.location.pathname.replace("/", "")) {
+    //   nextProps.dispatch({type: "PUSH_ROUTE", payload: this.props.location.pathname.replace("/", "")});
+    // }
   }
   componentWillUnmount() {
 
   }
   render() {
+    const update = Math.random();
     const {localization} = this.props.localization;
     const {resource} = this.props;
     const {deltaTime} = store.getState().time;
+    const {selectedPost} = this.props.post;
 
     const width = window.innerWidth; // canvas width
     const height = window.innerHeight; // canvas height
@@ -270,6 +303,11 @@ export default class App extends React.Component {
         </div>
       </div>
     </div>;
+
+    let report;
+    if (selectedPost) {
+      report = <Report post={selectedPost} />;
+    }
 
 
     if (resource.loaded) {
@@ -306,10 +344,12 @@ export default class App extends React.Component {
               {this.state.signMaterial}
               {this.state.whaleGeometry}
               {this.state.whaleMaterial}
+              {this.state.arrowGeometry}
+              {this.state.arrowMaterial}
               <meshPhongMaterial
                 resourceId="pinTextMaterial"
-                emissive={0xFFFFFF}
-                color={0xFFFFFF}
+                emissive={0xf0f8ff}
+                color={0xf0f8ff}
               />
               <meshLambertMaterial
                 resourceId="nodeMaterial"
@@ -317,7 +357,7 @@ export default class App extends React.Component {
               />
               <lineDashedMaterial
                 resourceId="shipPathMaterial"
-                color={0xFFFFFF}
+                color={0xf0f8ff}
                 scale={1}
                 linewidth={2}
               />
@@ -334,7 +374,8 @@ export default class App extends React.Component {
               <Pins />
               <Signs />
               <Planet />
-              <Ship />
+              <Ship ref="ship" />
+              <Whales />
             </scene>
           </React3>
 
@@ -345,52 +386,33 @@ export default class App extends React.Component {
                   mode="single"
                   forceSingleModeWidth={false}
                   perfectFit={true}
-                  throttle ={100}>
+                  throttle ={500}>
                   the
                 </Textfit>
               </div>
               <Textfit
                 mode="single"
-                throttle ={100}>
+                throttle ={500}>
                 Journey of Captain Whale
               </Textfit>
             </div>
             <div className="content">
-              Line 1<br/>
-              Line 2<br/>
-              Line 3<br/>
-              Line 4<br/>
-              Line 5<br/>
-              Line 6<br/>
-              Line 7<br/>
-              Line 8<br/>
-              Line 9<br/>
-              Line 1<br/>
-              Line 2<br/>
-              Line 3<br/>
-              Line 4<br/>
-              Line 5<br/>
-              Line 6<br/>
-              Line 7<br/>
-              Line 8<br/>
-              Line 9<br/>
-              Line 1<br/>
-              Line 2<br/>
-              Line 3<br/>
-              Line 4<br/>
-              Line 5<br/>
-              Line 6<br/>
-              Line 7<br/>
-              Line 8<br/>
-              Line 9<br/>
+              <Info update={update} />
+              <Posts update={update} />
             </div>
           </div>
-          {this.props.children}
+          {report}
+          <div className="copyright">
+            © 2017 CaptainWhale.
+          </div>
         </div>
       );
     }
     return <div className="app loading">
       {loader}
+      <div className="copyright">
+        © 2017 CaptainWhale.
+      </div>
     </div>;
   }
 }

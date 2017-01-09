@@ -51,6 +51,7 @@ export default class Ship extends React.Component {
     this.shipAngle = 0;
     this.shipSwindleTime = 0;
     this.pastTargetRotation = new THREE.Euler();
+    this.shipAddress = "South Atlantic Ocean";
   }
   onSelectPin(event) {
     const {shipRoot} = this.refs;
@@ -158,6 +159,21 @@ export default class Ship extends React.Component {
         this.setState({
           targetRotations: targetRotations,
         });
+        if (this.state.eventControl != null && targetRotations.length == 0) {
+          this.state.eventControl.finishSailing();
+        }
+        const {vertices} = store.getState().graph;
+        const pastTargetGeo = geoEulerToCoordinate(this.pastTargetRotation);
+        let temp = vertices[0];
+        let min = Math.pow(temp.coordinate[0] - pastTargetGeo[0], 2) + Math.pow(temp.coordinate[1] - pastTargetGeo[1], 2);
+        vertices.forEach((item, index) => {
+          let distance = Math.pow(item.coordinate[0] - pastTargetGeo[0], 2) + Math.pow(item.coordinate[1] - pastTargetGeo[1], 2);
+          if (distance < min) {
+            min = distance;
+            temp = item;
+          }
+        });
+        this.shipAddress = temp.address;
       }
       this.accumulatedTime += deltaTime * 0.175;
       this.prevShipWorldPosition = new THREE.Vector3().setFromMatrixPosition(ship.matrixWorld);
@@ -182,6 +198,12 @@ export default class Ship extends React.Component {
     while(this.shipSwindleTime > Math.PI * 2) {
       this.shipSwindleTime -= Math.PI * 2;
     }
+    const qt = new THREE.Quaternion().setFromEuler(shipRoot.rotation).normalize();
+    const eu = new THREE.Euler().setFromQuaternion(qt, "YXZ");
+    const geo = geoEulerToCoordinate(eu);
+
+    store.dispatch({type: "SET_SHIP_ADDRESS", payload: {coordinate: geo, address: this.shipAddress}});
+
   }
   componentWillUnmount() {
 

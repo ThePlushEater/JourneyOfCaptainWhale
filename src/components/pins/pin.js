@@ -16,6 +16,8 @@ export default class Pin extends React.Component {
       material: "pinMaterial",
       textMaterial: "pinTextMaterial",
       scale: new THREE.Vector3(1.5, 1.5, 1.5),
+      position3: new THREE.Vector3(0, 0, 0),
+      position: new THREE.Vector3(0, 0, 2),
       rotation: new THREE.Euler(1.57, 0, 0),
       rotation2: new THREE.Euler(0, 0.15, 0),
     }
@@ -66,9 +68,18 @@ export default class Pin extends React.Component {
     let material = "pinMaterial";
     let textMaterial = "pinTextMaterial";
     if (eventControl._pin == this) {
-      geometry = "whaleGeometry";
-      material = "whaleMaterial";
-      textMaterial = "pinTextMaterial";
+      // geometry = "whaleGeometry";
+      // material = "whaleMaterial";
+      // textMaterial = "pinTextMaterial";
+    }
+    let arrowPosZ = 0;
+    if (nextProps.closest == true) {
+      arrowPosZ = nextProps.zOffset;
+      if (store.getState().post.targetPost == null) {
+        store.dispatch({type: "SET_TARGET_POST_ITEM", payload: nextProps.item});
+      } else if (store.getState().post.targetPost.id != nextProps.item.id) {
+        store.dispatch({type: "SET_TARGET_POST_ITEM", payload: nextProps.item});
+      }
     }
     this.setState({
       rotation: new THREE.Euler(1.57, 0, 0),
@@ -77,6 +88,7 @@ export default class Pin extends React.Component {
       textMaterial: textMaterial,
       position: new THREE.Vector3(0, 0, nextProps.zOffset),
       position2: new THREE.Vector3(0.075, -0.05, 0.215),
+      position3: new THREE.Vector3(0, 0, arrowPosZ)
     });
   }
   componentWillUnmount() {
@@ -94,6 +106,17 @@ export default class Pin extends React.Component {
           />
           <materialResource
             resourceId={this.state.material}
+          />
+        </mesh>
+        <mesh
+          scale={this.state.scale}
+          position={this.state.position3}
+          rotation={this.state.rotation}>
+          <geometryResource
+            resourceId="arrowGeometry"
+          />
+          <materialResource
+            resourceId="arrowMaterial"
           />
         </mesh>
         <group

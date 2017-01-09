@@ -32,6 +32,14 @@ html {
     margin: 0;
     padding: 0;
     overflow: hidden;
+
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#263848+0,375f86+100 */
+    background: rgb(38,56,72); /* Old browsers */
+    background: -moz-linear-gradient(-45deg,  rgba(38,56,72,1) 0%, rgba(55,95,134,1) 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(-45deg,  rgba(38,56,72,1) 0%,rgba(55,95,134,1) 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(135deg,  rgba(38,56,72,1) 0%,rgba(55,95,134,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#263848', endColorstr='#375f86',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+
   }
 }
 
@@ -71,5 +79,5 @@ canvas {
 }
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: rgba(187,168,164,0.3);
+  background: rgba(75,128,177,0.35);
 }
