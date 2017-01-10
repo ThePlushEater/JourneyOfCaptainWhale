@@ -7,6 +7,7 @@ const defaultState = {
   fetched: false,
   error: null,
   coordinate: [0, 0],
+  sailing: false,
   address: "South Atlantic Ocean",
   vertices: [
     {coordinate: [0, 0], address: "South Atlantic Ocean"}, // 0
@@ -113,6 +114,9 @@ export default function reducer(state = defaultState, action) {
   switch (action.type) {
     case "SET_SHIP_ADDRESS": {
       return {...state, coordinate: action.payload.coordinate, address: action.payload.address};
+    }
+    case "SET_SAILING": {
+      return {...state, sailing: action.payload};
     }
   }
   return state;

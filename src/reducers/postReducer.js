@@ -22,7 +22,16 @@ export default function reducer(state = defaultState, action) {
     }
     case "FETCH_POSTS_FULFILLED" : {
       setTimeout(function() {
-        store.dispatch({type: "REFRESH_ROUTE"});
+        const {postTitle} = store.getState().history.router.params;
+        if (postTitle) {
+          const {allPosts} = store.getState().post;
+          const filteredPosts = allPosts.filter((item) => {
+            return item.title.rendered.toLowerCase().split(' ').join('-') == postTitle;
+          });
+          if (filteredPosts.length > 0) {
+            store.dispatch({type: "SET_SELECTED_POST_ITEM", payload: filteredPosts[0]});
+          }
+        }
       }.bind(this), 0);
       return state.merge({fetching: false, fetched: true, allPosts: action.payload.data});
     }

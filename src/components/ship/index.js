@@ -98,7 +98,7 @@ export default class Ship extends React.Component {
     this.setState({
       targetRotations: newTargetRotations,
     });
-
+    store.dispatch({type: "SET_SAILING", payload: true});
   }
   componentWillReceiveProps(nextProps) {
     const {shipRoot, ship, shipPath} = this.refs;
@@ -161,6 +161,7 @@ export default class Ship extends React.Component {
         });
         if (this.state.eventControl != null && targetRotations.length == 0) {
           this.state.eventControl.finishSailing();
+          store.dispatch({type: "SET_SAILING", payload: false});
         }
         const {vertices} = store.getState().graph;
         const pastTargetGeo = geoEulerToCoordinate(this.pastTargetRotation);

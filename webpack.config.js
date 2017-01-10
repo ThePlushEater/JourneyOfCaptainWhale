@@ -5,6 +5,8 @@ var BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 var HistoryApiFallback = require('connect-history-api-fallback');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var webpackUglifyJsPlugin = require('webpack-uglify-js-plugin');
+
 
 var SOURCE_DIR = path.resolve(__dirname, './src');
 var COMPONENTS_DIR = path.resolve(SOURCE_DIR, './components');
@@ -46,7 +48,7 @@ var corePluginList = [
     { from: path.join(SOURCE_DIR, "./.htaccess"), to: BUILD_DIR },
     { from: path.join(SOURCE_DIR, "./index.html"), to: path.join(BUILD_DIR, "./index.html") },
     { from: path.join(SOURCE_DIR, "./favicons/"), to: path.join(BUILD_DIR, "./favicons/") },
-    { from: path.join(SOURCE_DIR, "./localizations/"), to: path.join(BUILD_DIR, "./localizations/") },
+    // { from: path.join(SOURCE_DIR, "./localizations/"), to: path.join(BUILD_DIR, "./localizations/") },
     // { from: path.join(SOURCE_DIR, "./data/"), to: path.join(BUILD_DIR, "./data/") },
     { from: path.join(SOURCE_DIR, "./assets/"), to: path.join(BUILD_DIR, "./assets/") },
     { from: path.join(__dirname, "./libraries/"), to: path.join(BUILD_DIR, "./js/") }
@@ -67,6 +69,18 @@ var devPluginList = [
       middleware: [ HistoryApiFallback() ]
     }
     // proxy: 'http://localhost'
+  }),
+  new webpackUglifyJsPlugin({
+    cacheFolder: path.resolve(__dirname, 'public/cached_uglify/'),
+    debug: true,
+    minimize: true,
+    sourceMap: false,
+    output: {
+      comments: false
+    },
+    compressor: {
+      warnings: false
+    }
   })
 ];
 

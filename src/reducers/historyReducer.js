@@ -17,40 +17,40 @@ export default function reducer(state = defaultState, action) {
     case "PUSH_ROUTE": {
       if (action.payload == "") {
         state.router.push({pathname: ""});
-        setTimeout(function() {
-          store.dispatch({type: "SET_SELECTED_POST_ITEM", payload: null});
-        }.bind(this), 0);
+        // setTimeout(function() {
+        //   store.dispatch({type: "SET_SELECTED_POST_ITEM", payload: null});
+        // }.bind(this), 0);
       } else {
         state.router.push({pathname: action.payload.toString()});
-        setTimeout(function() {
-          const {allPosts} = store.getState().post;
-          const filteredPosts = allPosts.filter((item) => {
-            return item.title.rendered.toLowerCase().split(' ').join('-') == action.payload;
-          });
-          if (filteredPosts.length > 0) {
-            store.dispatch({type: "SET_SELECTED_POST_ITEM", payload: filteredPosts[0]});
-          }
-        }.bind(this), 0);
+        // setTimeout(function() {
+        //   const {allPosts} = store.getState().post;
+        //   const filteredPosts = allPosts.filter((item) => {
+        //     return item.title.rendered.toLowerCase().split(' ').join('-') == action.payload;
+        //   });
+        //   if (filteredPosts.length > 0) {
+        //     store.dispatch({type: "SET_SELECTED_POST_ITEM", payload: filteredPosts[0]});
+        //   }
+        // }.bind(this), 0);
       }
       return state.merge({route: action.payload});
     }
     case "REFRESH_ROUTE": {
       if (state.route == "") {
         state.router.replace({pathname: ""});
-        setTimeout(function() {
-          store.dispatch({type: "SET_SELECTED_POST_ITEM", payload: null});
-        }.bind(this), 0);
+        // setTimeout(function() {
+        //   store.dispatch({type: "SET_SELECTED_POST_ITEM", payload: null});
+        // }.bind(this), 0);
       } else {
         state.router.replace({pathname: state.route.toString()});
-        setTimeout(function() {
-          const {allPosts} = store.getState().post;
-          const filteredPosts = allPosts.filter((item) => {
-            return item.title.rendered.toLowerCase().split(' ').join('-') == state.route;
-          });
-          if (filteredPosts.length > 0) {
-            store.dispatch({type: "SET_SELECTED_POST_ITEM", payload: filteredPosts[0]});
-          }
-        }.bind(this), 0);
+        // setTimeout(function() {
+        //   const {allPosts} = store.getState().post;
+        //   const filteredPosts = allPosts.filter((item) => {
+        //     return item.title.rendered.toLowerCase().split(' ').join('-') == state.route;
+        //   });
+        //   if (filteredPosts.length > 0) {
+        //     store.dispatch({type: "SET_SELECTED_POST_ITEM", payload: filteredPosts[0]});
+        //   }
+        // }.bind(this), 0);
       }
     }
   }

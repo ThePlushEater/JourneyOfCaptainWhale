@@ -136,7 +136,7 @@ export default class Camera extends React.Component {
         }
         pinDirection.applyEuler(new THREE.Euler(temp.x + offset[0], temp.y + offset[1], temp.z + offset[2], "YXZ"));
 
-        if (camDirection.dot(pinDirection) < 0.99) {
+        if (camDirection.angleTo(pinDirection) * 180 / Math.PI < 10) {
           this.setState({
             targetRotation: null,
           });

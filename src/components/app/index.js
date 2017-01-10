@@ -79,6 +79,13 @@ export default class App extends React.Component {
 
   }
   componentDidMount() {
+    window.addEventListener('focus', function() {
+      this.time.start();
+    }.bind(this));
+    window.addEventListener('blur', function() {
+      this.time.stop();
+    }.bind(this));
+
     this.props.dispatch({type: "SET_ROUTER", payload: this.props.router});
     this.props.dispatch({type: "PUSH_ROUTE", payload: this.props.location.pathname.replace("/", "")});
 
@@ -290,6 +297,7 @@ export default class App extends React.Component {
     const {localization} = this.props.localization;
     const {resource} = this.props;
     const {deltaTime} = store.getState().time;
+    const {sailing} = store.getState().graph;
     const {selectedPost} = this.props.post;
 
     const width = window.innerWidth; // canvas width
@@ -303,6 +311,15 @@ export default class App extends React.Component {
         </div>
       </div>
     </div>;
+
+    let processing;
+    if (sailing) {
+      processing = <div className="processing">
+        <div className="wrapper">
+          Sailing...
+        </div>
+      </div>;
+    }
 
     let report;
     if (selectedPost) {
@@ -402,6 +419,7 @@ export default class App extends React.Component {
             </div>
           </div>
           {report}
+          {processing}
           <div className="copyright">
             © 2017 CaptainWhale.
           </div>
