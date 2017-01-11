@@ -132,11 +132,12 @@ export default class Camera extends React.Component {
         if (this.state.eventControl._pin.props) {
           temp = geoCoordinateToEuler(this.state.eventControl._pin.props.coordinate);
         } else {
-          temp = geoCoordinateToEuler(this.state.eventControl._pin.coordinate);
+          // console.log([this.state.eventControl._pin.acf.latitude, this.state.eventControl._pin.acf.longitude]);
+          temp = geoCoordinateToEuler([this.state.eventControl._pin.acf.latitude, this.state.eventControl._pin.acf.longitude]);
         }
         pinDirection.applyEuler(new THREE.Euler(temp.x + offset[0], temp.y + offset[1], temp.z + offset[2], "YXZ"));
 
-        if (camDirection.angleTo(pinDirection) * 180 / Math.PI < 10) {
+        if (camDirection.dot(pinDirection) < 0.99) {
           this.setState({
             targetRotation: null,
           });
