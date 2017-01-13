@@ -124,7 +124,7 @@
     width: 52.5%;
     height: 100%;
     padding: 4% 6% 6% 4%;
-    font-size: $font-large;
+    font-size: $font-medium-small;
     -webkit-user-select: none;  /* Chrome all / Safari all */
        -moz-user-select: none;  /* Firefox all */
         -ms-user-select: none;  /* IE 10+ */
@@ -168,6 +168,9 @@
         top: -30%;
         left: 0;
         text-align: center;
+        > div {
+          font-size: 2vw !important;
+        }
         @include respond-to(wide) {
           > div {
             font-size: 2vw !important;

@@ -73,7 +73,7 @@ export default class Info extends React.Component {
     const width = document.querySelector('.app') ? document.querySelector('.app').clientWidth : 0;
     const height = document.querySelector('.app') ? document.querySelector('.app').clientHeight : 0;
     if (width != 0 && height != 0) {
-      if (width <= 1024 && width < height) {
+      if ((width <= 1024 && width < height) || height < 600 ) {
         return(
           <div ref="container" className="info">
             <div className="title">
