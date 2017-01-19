@@ -42,3 +42,16 @@ ReactDom.render(<Provider store={store}>
     </Router>
   </Provider>
 , document.querySelector('#app'));
+
+let needToRedirect = false;
+
+if (navigator.userAgent.indexOf('Safari') > -1) {
+  if (navigator.userAgent.indexOf('Version/5') > -1 || navigator.userAgent.indexOf('Version/6') > -1 || navigator.userAgent.indexOf('Version/7') > -1) {
+    needToRedirect = true;
+  }
+}
+
+if (needToRedirect) {
+  alert("This browser doesn't support WebGL, so it redirects to the WordPress site.");
+  window.location = "https://www.thecaptainwhale.com/thecaptainwhale";
+}

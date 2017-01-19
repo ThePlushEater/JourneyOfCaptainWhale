@@ -131,7 +131,7 @@
             user-select: none;  /* Likely future */
 
     @include respond-to(wide) {
-      padding: 4% 6% 6% 6%;
+      padding: 3% 6% 6% 6%;
     }
     @include respond-to(landscape) {
 
