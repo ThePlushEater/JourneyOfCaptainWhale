@@ -44,6 +44,13 @@ export default class Report extends React.Component {
     container.addEventListener('touchleave', this._onMouseLeave, false);
 
     const contentDOM = ReactDom.findDOMNode(this.refs['content']);
+    window.addEventListener('resize', function(event) {
+      const iframes = contentDOM.querySelectorAll('iframe');
+      iframes.forEach((element) => {
+        element.width = contentDOM.clientWidth;
+        element.height = contentDOM.clientWidth * 9 / 16;
+      });
+    }.bind(this));
     const iframes = contentDOM.querySelectorAll('iframe');
     iframes.forEach((element) => {
       element.width = contentDOM.clientWidth;

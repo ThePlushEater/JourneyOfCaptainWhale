@@ -1,4 +1,5 @@
 import "babel-polyfill";
+require('./../utils/performance-polyfill');
 
 import React from "react";
 import ReactDom from "react-dom";

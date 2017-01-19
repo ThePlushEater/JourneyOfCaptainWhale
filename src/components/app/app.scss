@@ -162,42 +162,9 @@
               flex-shrink: 0;
       text-align: center;
       font-weight: 700;
-      > .the {
-        width: 87.5%;
-        position: absolute;
-        top: -30%;
-        left: 0;
-        text-align: center;
-        > div {
-          font-size: 2vw !important;
-        }
-        @include respond-to(wide) {
-          > div {
-            font-size: 2vw !important;
-          }
-        }
-        @include respond-to(landscape) {
-          > div {
-            font-size: 2vw !important;
-          }
-        }
-        @include respond-to(portrait) {
-          width: 90%;
-          > div {
-            top: -42%;
-            font-size: 6vw !important;
-          }
-        }
-        > div > span {
-          font-size: 80%;
-          @include respond-to(portrait) {
-            font-size: 65%;
-            font-size: 75%;
-          }
-          -webkit-transform: rotate(-17deg); /* Chrome, Safari, Opera */
-              -ms-transform: rotate(-17deg); /* IE 9 */
-                  transform: rotate(-17deg);
-        }
+      > img {
+        width: 100%;
+        height: auto;
       }
     }
     > .content {

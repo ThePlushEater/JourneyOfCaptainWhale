@@ -398,20 +398,7 @@ export default class App extends React.Component {
 
           <div className="ui-container">
             <div className="title">
-              <div className="the">
-                <Textfit
-                  mode="single"
-                  forceSingleModeWidth={false}
-                  perfectFit={true}
-                  throttle ={500}>
-                  the
-                </Textfit>
-              </div>
-              <Textfit
-                mode="single"
-                throttle ={500}>
-                Journey of Captain Whale
-              </Textfit>
+              <img src="./title.png" />
             </div>
             <div className="content">
               <Info update={update} />

@@ -72,7 +72,7 @@ export default class Camera extends React.Component {
           // position: new THREE.Vector3(0, 0, 3 * Math.max(768 / width, 1)),
           // rotation: new THREE.Euler(Math.PI * 0.15, 0, 0),
           // offset: [0.3, 0.4, -0.1],
-          position: new THREE.Vector3(0, 0, 6 * Math.max(768 / width, 1)),
+          position: new THREE.Vector3(0, 0, 8 * Math.max(height / width, 1)),
           rotation: new THREE.Euler(0.225, 0, 0),
           offset: [0.3, 0.3, 0],
         });
