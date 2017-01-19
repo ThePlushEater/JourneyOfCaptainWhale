@@ -123,7 +123,7 @@
     left: 0;
     width: 52.5%;
     height: 100%;
-    padding: 4% 6% 6% 4%;
+    padding: 3% 6% 6% 4%;
     font-size: $font-medium-small;
     -webkit-user-select: none;  /* Chrome all / Safari all */
        -moz-user-select: none;  /* Firefox all */
@@ -139,7 +139,7 @@
     @include respond-to(portrait) {
       width: 100%;
       height: 62.5%;
-      padding: 6% 5%;
+      padding: 4% 5%;
     }
 
     display: -webkit-box;
@@ -162,6 +162,7 @@
               flex-shrink: 0;
       text-align: center;
       font-weight: 700;
+      width: 100%;
       > img {
         width: 100%;
         height: auto;
