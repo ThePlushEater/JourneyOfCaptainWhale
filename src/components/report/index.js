@@ -54,19 +54,16 @@ export default class Report extends React.Component {
     const iframes = contentDOM.querySelectorAll('iframe');
     if (iframes && iframes.length > 0) {
       for (let i = 0; i < iframes.length; i++) {
-        let element = iframes[i];
-        element.width = contentDOM.clientWidth;
-        element.height = contentDOM.clientWidth * 9 / 16;
-        element.src = element.src + "&rel=0&showinfo=0";
+        iframes[i].width = contentDOM.clientWidth;
+        iframes[i].height = contentDOM.clientWidth * 9 / 16;
+        iframes[i].src = element.src + "&rel=0&showinfo=0";
       }
     }
     const links = contentDOM.querySelectorAll('a');
     if (links && links.length > 0) {
       for (let i = 0; i < links.length; i++) {
-        let element = links[0];
-        element.target = "_blank";
+        links[i].target = "_blank";
       }
-
     }
     // const images = contentDOM.querySelectorAll('img');
     // images.forEach((element) => {
