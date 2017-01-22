@@ -56,7 +56,7 @@ export default class Report extends React.Component {
       for (let i = 0; i < iframes.length; i++) {
         iframes[i].width = contentDOM.clientWidth;
         iframes[i].height = contentDOM.clientWidth * 9 / 16;
-        iframes[i].src = element.src + "&rel=0&showinfo=0";
+        iframes[i].src += "&rel=0&showinfo=0";
       }
     }
     const links = contentDOM.querySelectorAll('a');

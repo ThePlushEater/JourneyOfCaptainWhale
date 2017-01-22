@@ -59,9 +59,10 @@ export default class Pins extends React.Component {
 
     const posts = allPosts.map((item, index) => {
       if (sortedPosts[0].id == item.id) {
-        return <Pin key={"poist-" + index} closest={true} item={item} text={item.title.rendered} coordinate={[item.acf.latitude, item.acf.longitude]} zOffset={item.acf.zoffset} zRotation={item.acf.zrotation} />;
+        return <Pin key={"post-" + index} closest={true} item={item} text={item.title.rendered} coordinate={[item.acf.latitude, item.acf.longitude]} zOffset={item.acf.zoffset} zRotation={item.acf.zrotation} />;
+      } else {
+        return <Pin key={"post-" + index} closest={false} item={item} text={item.title.rendered} coordinate={[item.acf.latitude, item.acf.longitude]} zOffset={item.acf.zoffset} zRotation={item.acf.zrotation} />;
       }
-      return <Pin key={"poist-" + index} closest={false} item={item} text={item.title.rendered} coordinate={[item.acf.latitude, item.acf.longitude]} zOffset={item.acf.zoffset} zRotation={item.acf.zrotation} />;
     });
     this.setState({
       posts: posts,

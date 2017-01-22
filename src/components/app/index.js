@@ -87,7 +87,7 @@ export default class App extends React.Component {
     }.bind(this));
 
     this.props.dispatch({type: "SET_ROUTER", payload: this.props.router});
-    this.props.dispatch({type: "PUSH_ROUTE", payload: this.props.location.pathname.replace("/", "")});
+    this.props.dispatch({type: "PUSH_ROUTE", payload: this.props.location.pathname});
 
     this.props.dispatch(fetchPosts());
     const manager = new THREE.LoadingManager();

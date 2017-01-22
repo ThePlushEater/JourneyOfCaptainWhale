@@ -16,12 +16,12 @@ export default function reducer(state = defaultState, action) {
     }
     case "PUSH_ROUTE": {
       if (action.payload == "") {
-        state.router.push({pathname: ""});
+        state.router.push({pathname: __DIRECTORY__ + "/"});
         // setTimeout(function() {
         //   store.dispatch({type: "SET_SELECTED_POST_ITEM", payload: null});
         // }.bind(this), 0);
       } else {
-        state.router.push({pathname: action.payload.toString()});
+        state.router.push({pathname: __DIRECTORY__ + "/" + action.payload.toString().replace("/earth/", "")});
         // setTimeout(function() {
         //   const {allPosts} = store.getState().post;
         //   const filteredPosts = allPosts.filter((item) => {
@@ -32,16 +32,16 @@ export default function reducer(state = defaultState, action) {
         //   }
         // }.bind(this), 0);
       }
-      return state.merge({route: action.payload});
+      return state.merge({route: action.payload.toString().replace("/earth/", "")});
     }
     case "REFRESH_ROUTE": {
       if (state.route == "") {
-        state.router.replace({pathname: ""});
+        // state.router.replace({pathname: ""});
         // setTimeout(function() {
         //   store.dispatch({type: "SET_SELECTED_POST_ITEM", payload: null});
         // }.bind(this), 0);
       } else {
-        state.router.replace({pathname: state.route.toString()});
+        // state.router.replace({pathname: state.route.toString().replace("/earth", "")});
         // setTimeout(function() {
         //   const {allPosts} = store.getState().post;
         //   const filteredPosts = allPosts.filter((item) => {

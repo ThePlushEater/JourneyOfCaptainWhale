@@ -53,5 +53,5 @@ if (navigator.userAgent.indexOf('Safari') > -1) {
 
 if (needToRedirect) {
   alert("This browser doesn't support WebGL, so it redirects to the WordPress site.");
-  window.location = "https://www.thecaptainwhale.com/thecaptainwhale";
+  window.location = "https://www.thecaptainwhale.com";
 }
