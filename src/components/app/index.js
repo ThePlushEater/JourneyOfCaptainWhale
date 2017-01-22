@@ -410,6 +410,10 @@ export default class App extends React.Component {
           <div className="copyright">
             © 2017 CaptainWhale.
           </div>
+          <div className="flow" onClick={this.moveToFlowSite.bind(this)}>
+            <img className="icon" src="./whale_flow_icon.png" />
+            <img src="./whale_flow_text.png" />
+          </div>
         </div>
       );
     }
@@ -418,6 +422,13 @@ export default class App extends React.Component {
       <div className="copyright">
         © 2017 CaptainWhale.
       </div>
+      <div className="flow" onClick={this.moveToFlowSite.bind(this)}>
+        <img className="icon" src="./whale_flow_icon.png" />
+        <img src="./whale_flow_text.png" />
+      </div>
     </div>;
+  }
+  moveToFlowSite(event) {
+    window.location = "https://thecaptainwhale.com";
   }
 }

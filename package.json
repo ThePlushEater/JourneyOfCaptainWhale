@@ -58,6 +58,7 @@
     "react-textfit": "^0.1.8",
     "react-three-renderer": "^3.0.0",
     "react-window-resize-listener": "^1.1.0",
+    "stats-js": "^1.0.0-alpha1",
     "three": "^0.82.1",
     "three.meshline": "^1.0.1"
   }

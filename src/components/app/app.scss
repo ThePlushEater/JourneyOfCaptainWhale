@@ -242,6 +242,41 @@
       padding: 8px 16px;
     }
   }
+
+  > .flow {
+    height: 24px;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+
+    -webkit-flex-direction: row;
+            flex-direction: row;
+
+    position: fixed;
+    right: 2px;
+    top: 2px;
+
+    cursor: pointer;
+
+    > img {
+      height: 100%;
+      width: auto;
+    }
+    > .icon {
+      transform-origin: 50% 50%;
+      transform: rotate(0deg);
+      animation-duration: 5s;
+      animation-iteration-count: infinite;
+      animation-direction: normal;
+    }
+    &:hover {
+      > .icon {
+        animation-name: swing;
+      }
+    }
+  }
 }
 
 .copyright {

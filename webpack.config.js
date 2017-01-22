@@ -54,7 +54,7 @@ var corePlugins = [
     { from: path.join(SOURCE_DIR, "./.htaccess"), to: BUILD_DIR },
     { from: path.join(SOURCE_DIR, "./index.html"), to: path.join(BUILD_DIR, "./index.html") },
     { from: path.join(SOURCE_DIR, "./favicons/"), to: path.join(BUILD_DIR, "./favicons/") },
-    // { from: path.join(SOURCE_DIR, "./localizations/"), to: path.join(BUILD_DIR, "./localizations/") },
+    { from: path.join(SOURCE_DIR, "./assets/"), to: path.join(BUILD_DIR, "./assets/") },
     // { from: path.join(SOURCE_DIR, "./data/"), to: path.join(BUILD_DIR, "./data/") },
     // { from: path.join(SOURCE_DIR, "./assets/"), to: path.join(BUILD_DIR, "./assets/") },
     // { from: path.join(__dirname, "./libraries/"), to: path.join(BUILD_DIR, "./js/") }

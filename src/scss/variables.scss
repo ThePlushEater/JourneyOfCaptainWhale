@@ -18,3 +18,11 @@ $font-color-aliceblue: rgba(240, 248, 255, 1);
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+
+@keyframes swing {
+  0% { transform: rotate(0deg); }
+  20% { transform: rotate(-10deg); }
+  60% { transform: rotate(0deg); }
+  80% { transform: rotate(10deg); }
+  100% { transform: rotate(0deg); }
+}
